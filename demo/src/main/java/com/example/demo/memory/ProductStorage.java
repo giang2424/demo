@@ -1,7 +1,11 @@
 package com.example.demo.memory;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,10 +13,12 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.example.demo.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.example.demo.model.Product;
+
 
 @Component
 public class ProductStorage {
@@ -37,6 +43,8 @@ public class ProductStorage {
     private final Map<String, Product> storage = new ConcurrentHashMap<>(16, 0.8f, 4);
 
     private final AtomicInteger seqProduct = new AtomicInteger();
+
+    
 
     public ProductStorage() {
         loadDataset();
@@ -200,6 +208,7 @@ public class ProductStorage {
 
         addProductToStorage(product);
         // ignore possible previous value
+        saveDataset();
         return product;
     }
 
@@ -271,7 +280,7 @@ public class ProductStorage {
         if (numChange == 0) {
             throw new RuntimeException("product code=[" + product.getCode() + "] not updated");
         }
-
+        saveDataset();
         return itemInDb;
     }
 
@@ -282,8 +291,42 @@ public class ProductStorage {
         if (itemInDb == null) {
             throw new RuntimeException("product code=[" + code + "] not found in storage");
         }
-
+        saveDataset();
         return itemInDb;
+    }
+
+    public void saveDataset() {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(new File(ProductStorage.class.getResource("products.data").getPath()))
+        ))) {
+            LOG.debug("start saving dataset");
+
+            for (Product product : storage.values()) {
+                bw.write("code = " + product.getCode());
+                bw.newLine();
+                bw.write("name = " + product.getName());
+                bw.newLine();
+                bw.write("category = " + product.getCategory());
+                bw.newLine();
+                if (product.getBrand() != null) {
+                    bw.write("brand = " + product.getBrand());
+                    bw.newLine();
+                }
+                if (product.getType() != null) {
+                    bw.write("type = " + product.getType());
+                    bw.newLine();
+                }
+                if (product.getDescription() != null) {
+                    bw.write("description = " + product.getDescription());
+                    bw.newLine();
+                }
+                bw.newLine();
+            }
+
+            LOG.debug("finish saving dataset, size=" + storage.size());
+        } catch (Exception ex) {
+            throw new RuntimeException("fail saving dataset", ex);
+        }
     }
 
     public void println() {
