@@ -208,7 +208,7 @@
 		{
 			"id": "62884c3b-3145-43d0-8abc-d2a0718c8bac",
 			"key": "api_sboot",
-			"value": "http://localhost:61001/api",
+			"value": "http://localhost:8080/api",
 			"type": "string"
 		}
 	],
