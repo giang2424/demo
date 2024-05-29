@@ -22,11 +22,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
 					name = "License of API",
 					url = "http://demo.com/license"
 					),
-				// ),
-				// license = @License(
-				// 	name = "License of API",
-				// 	url = "http://demo.com/license"
-				// 	),
 				termsOfService = "Terms of service"
 		),
 		servers = {
