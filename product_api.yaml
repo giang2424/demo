@@ -1,0 +1,160 @@
+OpenAPI: '3.0'
+info:
+  title: Product API
+  description: Definition of REST-ful API related to products.
+  version: 1.0.0
+host: "localhost:8080"
+basePath: "/api"
+tags:
+  - name: Product
+    description: Related to products.
+schemes:
+  - http
+paths:
+  /products:
+    get:
+      tags:
+        - Product
+      summary: Get the list of products.
+      operationId: productList
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          in: query
+          description: Page of result (starts from 1).
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: The number of records per page.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Products'
+    post:
+      tags:
+        - Product
+      summary: Create a new product.
+      operationId: createProduct
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductExecResult'
+  '/products/{code}':
+    get:
+      tags:
+        - Product
+      summary: Get one product by code.
+      operationId: productItem
+      produces:
+        - application/json
+      parameters:
+        - name: code
+          in: path
+          description: The product code.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+    put:
+      tags:
+        - Product
+      summary: Update an existing product.
+      operationId: updateProduct
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: code
+          in: path
+          description: The product code.
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductExecResult'
+    delete:
+      tags:
+        - Product
+      summary: Delete existing product by code.
+      operationId: deleteProduct
+      produces:
+        - application/json
+      parameters:
+        - name: code
+          in: path
+          description: The product code.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+definitions:
+  Product:
+    description: Reusing this model for UPDATE, DELETE as well.
+    properties:
+      id:
+        type: integer
+        description: Mandatory.
+      code:
+        type: string
+        description: Mandatory.
+      name:
+        type: string
+        description: Mandatory.
+      category:
+        type: string
+        description: Mandatory.
+      brand:
+        type: string
+      type:
+        type: string
+      description:
+        type: string
+    type: object
+  Products:
+    description: List of products.
+    type: array
+    items:
+      $ref: '#/definitions/Product'
+  ProductExecResult:
+    required:
+      - success
+    properties:
+      success:
+        type: boolean
+        default: false
+      message:
+        type: string
+        description: Any message.
+      product:
+        $ref: '#/definitions/Product'
+    type: object

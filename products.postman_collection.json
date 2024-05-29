@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "8953894f-743f-4376-a349-eabc798f2388",
+		"name": "products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "listing",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api_sboot}}/products?page=1&size=5",
+					"host": [
+						"{{api_sboot}}"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "single item",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{api_sboot}}/products/:code",
+					"host": [
+						"{{api_sboot}}"
+					],
+					"path": [
+						"products",
+						":code"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "code",
+							"value": "P003"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"P101\",\r\n    \"name\": \"Tall Basket\",\r\n    \"category\": \"Home Decoration\",\r\n    \"brand\": null,\r\n    \"type\": null,\r\n    \"description\": \"The next super product of the year.\"\r\n}"
+				},
+				"url": {
+					"raw": "{{api_sboot}}/products",
+					"host": [
+						"{{api_sboot}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update item",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"*NULL*\"\r\n}"
+				},
+				"url": {
+					"raw": "{{api_sboot}}/products/:code",
+					"host": [
+						"{{api_sboot}}"
+					],
+					"path": [
+						"products",
+						":code"
+					],
+					"variable": [
+						{
+							"key": "code",
+							"value": "P003"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete item",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{api_sboot}}/products/:code",
+					"host": [
+						"{{api_sboot}}"
+					],
+					"path": [
+						"products",
+						":code"
+					],
+					"variable": [
+						{
+							"key": "code",
+							"value": "P003"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8fc96e98-9d2e-45f7-9370-45561de81212",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c1bc33bb-bae9-49ce-af73-d9cd28d5889d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "62884c3b-3145-43d0-8abc-d2a0718c8bac",
+			"key": "api_sboot",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

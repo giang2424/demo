@@ -1,0 +1,74 @@
+<application xmlns="http://wadl.dev.java.net/2009/02">
+   <doc xml:lang="en" title="Product API">Definition of REST-ful API related to products.</doc>
+   <resources base="http://localhost:8080/api">
+      <resource path="products" id="/products">
+         <doc xml:lang="en" title="/products"/>
+         <method name="GET" id="productList">
+            <doc xml:lang="en" title="productList">Get the list of products.</doc>
+            <request>
+               <param name="page" type="xs:string" required="false" default="" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                  <doc xml:lang="en" title="page Parameter">Page of result (starts from 1).</doc>
+               </param>
+               <param name="size" type="xs:string" required="false" default="" style="query" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                  <doc xml:lang="en" title="size Parameter">The number of records per page.</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+         <method name="POST" id="createProduct">
+            <doc xml:lang="en" title="createProduct">Create a new product.</doc>
+            <request>
+               <representation mediaType="application/json"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="">
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="products/{code}" id="/products/{code}">
+         <doc xml:lang="en" title="/products/{code}"/>
+         <method name="GET" id="productItem">
+            <doc xml:lang="en" title="productItem">Get one product by code.</doc>
+            <request>
+               <param name="code" type="xs:string" required="true" default="" style="template" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                  <doc xml:lang="en" title="code Parameter">The product code.</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+         <method name="PUT" id="updateProduct">
+            <doc xml:lang="en" title="updateProduct">Update an existing product.</doc>
+            <request>
+               <param name="code" type="xs:string" required="true" default="" style="template" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                  <doc xml:lang="en" title="code Parameter">The product code.</doc>
+               </param>
+               <representation mediaType="application/json"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json"/>
+            </response>
+            <response status="">
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+         <method name="DELETE" id="deleteProduct">
+            <doc xml:lang="en" title="deleteProduct">Delete existing product by code.</doc>
+            <request>
+               <param name="code" type="xs:string" required="true" default="" style="template" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                  <doc xml:lang="en" title="code Parameter">The product code.</doc>
+               </param>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
